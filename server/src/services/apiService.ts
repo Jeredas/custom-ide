@@ -24,14 +24,14 @@ class ApiService {
           };
           avrpizza.compile(sketch, function(error, hex) {
               console.log(hex)
-            fs.open('compiled.hex', 'w', (err) => {
+            fs.writeFile('compiled.hex', hex, (err) => {
                 if(err) throw err;
                 console.log('File created');
             });
-            fs.appendFile('compiled.hex', hex, (err) => {
-                if(err) throw err;
-                console.log('Data has been added2!');
-            });
+            // fs.appendFile('compiled.hex', hex, (err) => {
+            //     if(err) throw err;
+            //     console.log('Data has been added2!');
+            // });
           });
     }
 
