@@ -6,14 +6,14 @@ import avrpizza from  'avr-pizza';
 
 class ApiService {
     hexCompiler(code:string) {
-        fs.open('./temp/temp.ino', 'w', (err) => {
+        fs.writeFile('./temp.ino',code, (err) => {
             if(err) throw err;
             console.log('File created');
         });
-        fs.appendFile('.temp/temp.ino', code, (err) => {
-            if(err) throw err;
-            console.log('Data has been added1!');
-        });
+        // fs.appendFile('temp.ino', code, (err) => {
+        //     if(err) throw err;
+        //     console.log('Data has been added1!');
+        // });
         this.compile()
         
     }
@@ -28,7 +28,7 @@ class ApiService {
                 if(err) throw err;
                 console.log('File created');
             });
-            fs.appendFile('compiled1.hex', hex, (err) => {
+            fs.appendFile('compiled.hex', hex, (err) => {
                 if(err) throw err;
                 console.log('Data has been added2!');
             });

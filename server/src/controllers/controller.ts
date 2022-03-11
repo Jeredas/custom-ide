@@ -2,7 +2,7 @@ const ratesService = require('../services/apiService');
 
 class RatesController {
     public async compile(req,res) {
-        try { const converted = await ratesService.compile(req.body.code)
+        try { const converted = await ratesService.hexCompiler(req.body.code)
             res.json(converted);
         } catch(e) {
             console.log(e);
