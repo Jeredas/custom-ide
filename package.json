@@ -1,0 +1,26 @@
+{
+	"name": "custom_ide",
+	"workspaces": [
+	  "./server",
+	  "./client"
+	],
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+	  "client": "npm --workspace=client run start",
+	  "server": "npm --workspace=server run start"
+	},
+	"repository": {
+	  "type": "git",
+	  "url": "git+https://github.com/Jeredas/custom-ide.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+	  "url": "https://github.com/Jeredas/custom-ide"
+	},
+	"homepage": "https://github.com/Jeredas/custom-ide.git#readme"
+  }
+  
