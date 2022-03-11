@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/server.ts"
+  },
+  "author": "Jeredas",
+  "license": "ISC",
+  "dependencies": {
+    "avr-pizza": "^0.3.5",
+    "axios": "^0.24.0",
+    "big-number": "^2.0.0",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^3.1.0",
+    "quirkbot-avr-gcc": "^2.0.4",
+    "to-hex": "^0.0.17"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.14",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0"
+  }
+}
