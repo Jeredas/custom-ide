@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import AceEditor from "react-ace";
@@ -32,6 +32,7 @@ function App() {
       body: JSON.stringify({ code: value }),
     });
   };
+
   return (
     <div className="main_wrapper">
       <select onChange={(e) => handleSelect(e)} className='select'>
@@ -74,11 +75,9 @@ function App() {
       <button
         className="button"
         onClick={() => {
-          navigator.bluetooth
-            .requestDevice({
-              acceptAllDevices: true,
-            })
-            .then((data) => setDevice(data));
+          // find().then(device=>{
+          //   console.log(device)
+          // })
         }}
       >
         View devices
