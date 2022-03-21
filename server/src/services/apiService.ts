@@ -3,24 +3,35 @@ import fs from 'fs';
 import avrpizza from  'avr-pizza';
 import Avrgirl from 'avrgirl-arduino';
 import find from 'local-devices';
-
+import cpplint from 'node-cpplint/lib//index';
+import rep from "node-cpplint/lib/reporters"
+let reporter = rep.scpec
 
 class ApiService {
     async hexCompiler(code:string) {
      console.log(find)
         fs.writeFileSync("temp.ino", code);
-        // this.compile()
         var pack = {
-            sketch: 'temp.ino',
-          //  / libraries: ['D:/custom-ide/server/libs/'],
-            board: 'uno'
-          };
+          sketch: "temp.ino",
+          board: "uno",
+        };
+  
+        var options = {
+          files: ["D:/custom-ide/server/temp.ino"],
+        };
+
+        // cpplint(options, (err,report)=>{
+        //   console.log(err)
+        //   console.log(report)
+        // });
         avrpizza.compile(pack, function(error, hex) {
-            if(error){console.log('error',error)}
+          if(!error){
             fs.writeFileSync('compiled.hex', hex);
             return hex;
+          } else {
+            console.log(error)
+          }
           })
-
     }
     async burn(){
       const avrgirl = new Avrgirl({
@@ -36,26 +47,6 @@ class ApiService {
       });
       
     }
-    // compile(){
-    //     let sketch = {
-    //         sketch: './temp.ino',
-    //         board: 'uno',
-    //         // builder: {
-    //         //     location: 'C:\Program Files\Arduino IDE\Arduino IDE'
-    //         //   }
-    //       };
-    //       avrpizza.compile(sketch, function(error, hex) {
-    //         fs.writeFile('compiled.hex', hex, (err) => {
-    //             if(err) throw err;
-    //             console.log('File created');
-    //         });
-    //         // fs.appendFile('compiled.hex', hex, (err) => {
-    //         //     if(err) throw err;
-    //         //     console.log('Data has been added2!');
-    //         // });
-    //       });
-    // }
-
 };
 
 const apiService = new ApiService();

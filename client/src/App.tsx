@@ -9,87 +9,110 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
+import {
+  BlocklyWorkspace,
+  Workspace,
+  useBlocklyWorkspace,
+} from "react-blockly";
+import Blockly from "blockly";
+import BlocklyPython from "blockly/python";
+import { toolbox } from "./cfg";
 
 function App() {
   const [value, setValue] = useState(template);
   const [language, setLanguage] = useState("java");
   const [device, setDevice] = useState({});
-
+  const [xml, setXml] = useState("");
   const validateCode = (value: string) => {
     console.log("validate");
   };
-
+  const [code, setCode] = useState("");
+  // var code = new Blockly.Generator('python').workspaceToCode(new Workspace)
   const handleSelect = (e: any) => {
     setLanguage(e.target.value);
   };
-
+  const codeGenerate = (e: any) => {
+    // setValue(BlocklyPython.workspaceToCode(e));
+  };
   const handleSave = async () => {
-    let response = await fetch("http://localhost:6600/savefile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({ code: value }),
-    });
+    // let response = await fetch("http://localhost:6600/savefile", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json;charset=utf-8",
+    //   },
+    //   body: JSON.stringify({ code: value }),
+    // });
   };
 
   return (
     <div className="main_wrapper">
-      <select onChange={(e) => handleSelect(e)} className='select'>
-        <option value="javascript">javascript</option>
-        <option value="c_cpp">C++</option>
-        <option value="python">Python</option>
-      </select>
-      <AceEditor
-        placeholder="Placeholder Text"
-        mode={language}
-        theme="monokai"
-        name="blah2"
-        commands={[
-          {
-            // commands is array of key bindings.
-            name: "commandName", //name for the key binding.
-            bindKey: { win: "Ctrl-k", mac: "Command-k" }, //key combination used for the command.
-            exec: () => validateCode(value), //function to execute when keys are pressed.
-          },
-        ]}
-        onChange={(e) => {
-          setValue(e);
-        }}
-        width={`1000px`}
-        height={`1000px`}
-        fontSize={14}
-        showPrintMargin={true}
-        showGutter={true}
-        highlightActiveLine={true}
-        value={value}
-        setOptions={{
-          useWorker: true,
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-          enableSnippets: true,
-          showLineNumbers: true,
-          tabSize: 4,
-        }}
-      />
-      <button
-        className="button"
-        onClick={() => {
-          // find().then(device=>{
-          //   console.log(device)
-          // })
-        }}
-      >
-        View devices
-      </button>
-      <button
-        className="button"
-        onClick={() => {
-          handleSave();
-        }}
-      >
-        Save sketch
-      </button>
+      <div className="ide_wrapper">
+        <BlocklyWorkspace
+          className="blockly" // you can use whatever classes are appropriate for your app's CSS
+          toolboxConfiguration={toolbox} // this must be a JSON toolbox definition
+          initialXml={xml}
+          onXmlChange={() => setXml}
+          onWorkspaceChange={codeGenerate}
+        />
+
+        <div className="ace_wrapper">
+          <select onChange={(e) => handleSelect(e)} className="select">
+            <option value="javascript">javascript</option>
+            <option value="c_cpp">C++</option>
+            <option value="python">Python</option>
+          </select>
+          <AceEditor
+            placeholder="Placeholder Text"
+            mode={language}
+            theme="monokai"
+            name="blah2"
+            commands={[
+              {
+                // commands is array of key bindings.
+                name: "commandName", //name for the key binding.
+                bindKey: { win: "Ctrl-k", mac: "Command-k" }, //key combination used for the command.
+                exec: () => validateCode(value), //function to execute when keys are pressed.
+              },
+            ]}
+            onChange={(e) => {
+              setValue(e);
+            }}
+            width={`1000px`}
+            height={`1000px`}
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            value={value}
+            setOptions={{
+              useWorker: true,
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: true,
+              enableSnippets: true,
+              showLineNumbers: true,
+              tabSize: 4,
+            }}
+          />
+          <button
+            className="button"
+            onClick={() => {
+              // find().then(device=>{
+              //   console.log(device)
+              // })
+            }}
+          >
+            View devices
+          </button>
+          <button
+            className="button"
+            onClick={() => {
+              handleSave();
+            }}
+          >
+            Save sketch
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
